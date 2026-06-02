@@ -68,7 +68,7 @@ public class UltraAvatarTyndarius
             "Ball1Taunter",
             "Ball 1 Taunter",
             "Class name that taunts Ball 1 (left orb).",
-            "ArchPaladin"
+            "StoneCrusher"
         ),
         new Option<string>(
             "Ball2Killer",
@@ -80,7 +80,7 @@ public class UltraAvatarTyndarius
             "TynTaunter1",
             "Tyndarius Taunter 1",
             "Class name of Tyndarius Taunter 1 (fires at 0s).\nName must be exact including punctuation, spelling, and capitalisation.",
-            "StoneCrusher"
+            "ArchPaladin"
         ),
         new Option<string>(
             "TynTaunter2",
@@ -264,13 +264,28 @@ public class UltraAvatarTyndarius
                 }
                 else if (ball1Alive)
                 {
-                    Bot.Combat.Attack(1);
-                    for (int i = 0; i < 40 && !Bot.ShouldExit; i++)
+                    if (Bot.Skills.CanUseSkill(5))
                     {
-                        if (!Bot.Player.Alive) break;
-                        if (!Bot.Player.HasTarget) Bot.Combat.Attack(1);
-                        Bot.Skills.UseSkill(5);
-                        Bot.Sleep(25);
+                        Bot.Combat.Attack(1);
+                        for (int i = 0; i < 40 && !Bot.ShouldExit; i++)
+                        {
+                            if (!Bot.Player.Alive) break;
+                            if (!Bot.Player.HasTarget || Bot.Player.Target?.MapID != 1) Bot.Combat.Attack(1);
+                            if (Bot.Skills.CanUseSkill(5))
+                                Bot.Skills.UseSkill(5);
+                            Bot.Sleep(25);
+                        }
+                    }
+
+                    if (ball2Alive)
+                    {
+                        Bot.Combat.Attack(3);
+                        Bot.Sleep(500);
+                    }
+                    else
+                    {
+                        Bot.Combat.Attack(1);
+                        Bot.Sleep(500);
                     }
                 }
                 else if (ball2Alive)
@@ -335,20 +350,11 @@ public class UltraAvatarTyndarius
                         C.Logger("Tyndarius taunt done.");
                         Bot.Sleep(300);
                     }
-                    else if (ball2Alive)
-                    {
-                        // Outside taunt window — help kill Ball 2
-                        Bot.Combat.Attack(3);
-                        Bot.Sleep(500);
-                    }
-                    else if (ball1Alive)
-                    {
-                        // Ball 2 dead — help kill Ball 1
-                        Bot.Combat.Attack(1);
-                        Bot.Sleep(500);
-                    }
                     else
                     {
+                        // Outside the taunt window, stay on Tyndarius and keep pressure on boss.
+                        if (!Bot.Player.HasTarget)
+                            Bot.Combat.Attack(2);
                         Bot.Sleep(500);
                     }
                 }
