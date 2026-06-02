@@ -80,9 +80,9 @@ public class UltraDailies
         new Option<string>("Separator1", "--------------------", "----------", "--------------------"),
 
         // UltraAvatarTyndarius options
-        new Option<string>("Ball1Taunter", "Ball 1 Taunter", "Class name that taunts Ball 1 (left orb).", "ArchPaladin"),
+        new Option<string>("Ball1Taunter", "Ball 1 Taunter", "Class name that taunts Ball 1 (left orb).", "StoneCrusher"),
         new Option<string>("Ball2Killer", "Ball 2 Killer", "Class name that kills Ball 2 (right orb).", "King's Echo"),
-        new Option<string>("TynTaunter1", "Tyndarius Taunter 1", "Class name of Tyndarius Taunter 1 (fires at 0s).", "StoneCrusher"),
+        new Option<string>("TynTaunter1", "Tyndarius Taunter 1", "Class name of Tyndarius Taunter 1 (fires at 0s).", "ArchPaladin"),
         new Option<string>("TynTaunter2", "Tyndarius Taunter 2", "Class name of Tyndarius Taunter 2 (fires at 6s).", "Lord Of Order"),
 
         new Option<string>("Class1", "Class 1", "Preset class 1 to auto-equip before the fight. Use format: ClassName,Username. Only type ClassName if you want it to be random.", "ArchPaladin"),
@@ -786,19 +786,27 @@ public class UltraDailies
                 }
                 else if (ball1Alive)
                 {
-                    Bot.Combat.Attack(1);
-                    for (int i = 0; i < 40 && !Bot.ShouldExit; i++)
+                    if (Bot.Skills.CanUseSkill(5))
                     {
-                        if (!Bot.Player.Alive) break;
-                        if (!Bot.Player.HasTarget) Bot.Combat.Attack(1);
-                        Bot.Skills.UseSkill(5);
-                        Bot.Sleep(25);
+                        Bot.Combat.Attack(1);
+                        for (int i = 0; i < 40 && !Bot.ShouldExit; i++)
+                        {
+                            if (!Bot.Player.Alive) break;
+                            if (!Bot.Player.HasTarget || Bot.Player.Target?.MapID != 1) Bot.Combat.Attack(1);
+                            if (Bot.Skills.CanUseSkill(5))
+                                Bot.Skills.UseSkill(5);
+                            Bot.Sleep(25);
+                        }
                     }
 
                     if (ball2Alive)
                     {
-                        // After taunting Ball 1, help kill Ball 2 like the Tyndarius taunters.
                         Bot.Combat.Attack(3);
+                        Bot.Sleep(500);
+                    }
+                    else
+                    {
+                        Bot.Combat.Attack(1);
                         Bot.Sleep(500);
                     }
                 }
@@ -855,40 +863,18 @@ public class UltraDailies
                         {
                             if (!Bot.Player.Alive) break;
                             if (!Bot.Player.HasTarget) Bot.Combat.Attack(2);
-                            Bot.Skills.UseSkill(5);
+                            if (Bot.Skills.CanUseSkill(5))
+                                Bot.Skills.UseSkill(5);
                             Bot.Sleep(25);
                         }
 
                         C.Logger("Tyndarius taunt done.");
-                        if (ball2Alive)
-                        {
-                            // After taunting, help kill Ball 2 immediately.
-                            Bot.Combat.Attack(3);
-                            Bot.Sleep(500);
-                        }
-                        else if (ball1Alive)
-                        {
-                            // Ball 2 dead — help kill Ball 1.
-                            Bot.Combat.Attack(1);
-                            Bot.Sleep(500);
-                        }
-                        else
-                        {
-                            Bot.Sleep(300);
-                        }
-                    }
-                    else if (ball2Alive)
-                    {
-                        Bot.Combat.Attack(3);
-                        Bot.Sleep(500);
-                    }
-                    else if (ball1Alive)
-                    {
-                        Bot.Combat.Attack(1);
-                        Bot.Sleep(500);
+                        Bot.Sleep(300);
                     }
                     else
                     {
+                        if (!Bot.Player.HasTarget)
+                            Bot.Combat.Attack(2);
                         Bot.Sleep(500);
                     }
                 }
