@@ -51,8 +51,8 @@ public class UltraDailies
     public bool DontPreconfigure = true;
     public string OptionsStorage = "UltraDailies";
 
-    private const double WardenTauntInterval = 12.0;
-    private const double WardenTauntWindow = 6.0;
+    private const double WardenTauntInterval = 10.0;
+    private const double WardenTauntWindow = 5.0;
     private DateTime wardenFightStartTime = DateTime.MinValue;
     private double wardenTauntOffsetSeconds = 0;
     private DateTime wardenLastTauntTime = DateTime.MinValue;
@@ -62,8 +62,8 @@ public class UltraDailies
     private bool isTynTaunter;
     private DateTime tynFightStartTime = DateTime.MinValue;
     private double tynTauntOffset = 0;
-    private const double TynTauntInterval = 12.0;
-    private const double TynTauntWindow = 6.0;
+    private const double TynTauntInterval = 10.0;
+    private const double TynTauntWindow = 5.0;
     private DateTime tynLastTaunt = DateTime.MinValue;
 
     private bool enhancementsApplied = false;
@@ -77,7 +77,7 @@ public class UltraDailies
         // UltraWarden options
         new Option<int>("ArmySize", "Army Size", "How many players are in your army (including yourself).", 4),
         new Option<string>("WardenTaunter1", "Warden Primary Taunter", "Class name for Warden primary taunter (fires at 0s).", "ArchPaladin"),
-        new Option<string>("WardenTaunter2", "Warden Secondary Taunter", "Class name for Warden secondary taunter (fires at 6s).", "StoneCrusher"),
+        new Option<string>("WardenTaunter2", "Warden Secondary Taunter", "Class name for Warden secondary taunter (fires at 5s).", "StoneCrusher"),
         new Option<string>("Separator1", "--------------------", "----------", "--------------------"),
 
         // UltraAvatarTyndarius options
