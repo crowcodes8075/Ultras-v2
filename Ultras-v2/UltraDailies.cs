@@ -563,9 +563,9 @@ public class UltraDailies
             Ultra.GetScrollOfEnrage();
 
         string cn = Bot.Player.CurrentClass?.Name ?? string.Empty;
-        if (!string.IsNullOrEmpty(a) && cn.Equals(a, StringComparison.OrdinalIgnoreCase))
+        if (!string.IsNullOrEmpty(a) && HasAssignedClass(a))
             wardenTauntOffsetSeconds = 0;
-        else if (!string.IsNullOrEmpty(b) && cn.Equals(b, StringComparison.OrdinalIgnoreCase))
+        else if (!string.IsNullOrEmpty(b) && HasAssignedClass(b))
             wardenTauntOffsetSeconds = 5;
         else
             wardenTauntOffsetSeconds = 0;
@@ -573,12 +573,7 @@ public class UltraDailies
         C.Logger($"Warden taunt offset: {wardenTauntOffsetSeconds}s (class: {cn})");
     }
 
-    private bool IsWardenTaunter(string a, string b)
-    {
-        string cn = Bot.Player.CurrentClass?.Name ?? string.Empty;
-        return (!string.IsNullOrEmpty(a) && cn.Equals(a, StringComparison.OrdinalIgnoreCase))
-            || (!string.IsNullOrEmpty(b) && cn.Equals(b, StringComparison.OrdinalIgnoreCase));
-    }
+    private bool IsWardenTaunter(string a, string b) => HasAssignedClass(a) || HasAssignedClass(b);
 
     private void FightWarden()
     {
