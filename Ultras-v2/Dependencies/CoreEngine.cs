@@ -2769,7 +2769,7 @@ public class CoreEngine
                 InfinityTitanClass();
                 break;
             case "lord of order":
-                LordsOfOrderClass();
+                LordOfOrderClass();
                 break;
             case "void highlord":
             case "void highlord (ioda)":
@@ -2923,7 +2923,7 @@ public class CoreEngine
             return;
     }
 
-void KingsEcho()
+    void KingsEcho()
     {
         int energyStacks = GetAuraStacks("Residual Energy", true);
 
@@ -2982,9 +2982,9 @@ void KingsEcho()
             return;
     }
 
-    void LordsOfOrderClass()
+    void LordOfOrderClass()
     {
-        if (NotUltraDage() && (IsHealthLow(80) || IsArmyHealthLow(80)))
+        if (NotUltraDage() && (IsHealthLow(80) || IsArmyHealthLow(80) || Left("Resurgence", 2, true)))
         {
             if (Cast(2))
                 return;
@@ -3017,7 +3017,7 @@ void KingsEcho()
         if (Cast(4)) return;
     }
 
-void StoneCrusherClass()
+    void StoneCrusherClass()
     {
         if (Cast(2))
             return;
@@ -3057,44 +3057,46 @@ void StoneCrusherClass()
 
     void ArchPaladinClass()
     {
-
-            // Hymn of Light (Heal) is action bar button 2
-            if ((IsHealthLow(50) || IsArmyHealthLow(50)) && NotUltraDage())
-            {
-                if (Cast(2))
-                    return;
-            }
-
-            // Righteous Seal is action bar button 3
-            // If the monster target does NOT have the debuff, apply it
-            if (!HasAura("Righteous Seal"))
-                if (Cast(3))
-                    return;
-
-            // Sacred Magic: Eden (Nuke) is action bar button 4
-            // Only cast this if the target HAS the aura, and it has 1 second or less remaining
-            if (HasAura("Righteous Seal") && Left("Righteous Seal", 2))
-                if (Cast(4))
-                    return;
-
-            // Commandment (Spam debuff) is action bar button 1
-            if (Cast(1))
+        if ((IsHealthLow(50) || IsArmyHealthLow(50)) && NotUltraDage() || Left("Hymn of Light", 2, true))
+        {
+            if (Cast(2))
                 return;
+        }
+
+        if (!HasAura("Righteous Seal"))
+            if (Cast(3))
+                return;
+
+        if (HasAura("Righteous Seal") && Left("Righteous Seal", 2))
+            if (Cast(4))
+                return;
+
+        if (Cast(1))
+            return;
     }
 
     void VoidHighlordClass()
     {
-        if (HasAura("Unshackled", true))
-            if (Cast(4))
-                return;
         if (IsHealthHigh(60))
-            if (Cast(1))
-                return;
-        if (Cast(2))
-            return;
-        if (IsHealthHigh(60))
+        {
             if (Cast(3))
                 return;
+        }
+
+        if (HasAura("Unshackled", true))
+        {
+            if (Cast(4))
+                return;
+        }
+
+        if (IsHealthHigh(60))
+        {
+            if (Cast(1))
+                return;
+        }
+
+        if (Cast(2))
+            return;
     }
 
     void ChaosAvengerClass()
