@@ -47,10 +47,17 @@ public class UltraEnhancements
                 );
                 break;
 
+            case "Scion of Flames":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Healer,
+                    wSpecial: WeaponSpecial.Lacerate
+                );
+                break;
+
             case "Lord Of Order":
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Healer,
-                    wSpecial: WeaponSpecial.Awe_Blast,
+                    wSpecial: WeaponSpecial.Mana_Vamp,
                     cSpecial: CapeSpecial.Absolution
                 );
                 break;
@@ -166,9 +173,8 @@ public class UltraEnhancements
 
             case "Arachnomancer":
                 Adv.EnhanceEquipped(
-                    type: EnhancementType.Lucky,
-                    hSpecial: HelmSpecial.Vim,
-                    wSpecial: WeaponSpecial.Ravenous,
+                    type: EnhancementType.Fighter,
+                    wSpecial: WeaponSpecial.Elysium,
                     cSpecial: CapeSpecial.Lament
                 );
                 break;
@@ -309,8 +315,8 @@ public class UltraEnhancements
             case "Dragon of Time":
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Healer,
-                    hSpecial: HelmSpecial.Examen,
-                    wSpecial: WeaponSpecial.Valiance,
+                    hSpecial: HelmSpecial.Pneuma,
+                    wSpecial: WeaponSpecial.Elysium,
                     cSpecial: CapeSpecial.Vainglory
                 );
             break;
@@ -418,7 +424,7 @@ public class UltraEnhancements
             case "Lord Of Order":
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Lucky,
-                    wSpecial: WeaponSpecial.Awe_Blast
+                    wSpecial: WeaponSpecial.Mana_Vamp
                 );
                 break;
 
