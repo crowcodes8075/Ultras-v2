@@ -2979,13 +2979,13 @@ public class CoreEngine
     {
         int energyStacks = GetAuraStacks("Residual Energy", true);
 
-        if (Bot.Player.Mana < 28)
+        if (Bot.Player.Mana < 20)
         {
             if (Cast(4)) 
                 return;
         }
 
-        if (IsHealthLow(80) && Left("Royal Resolve", 1, true))
+        if (NotUltraDage() && (IsHealthLow(80) && Left("Royal Resolve", 1, true)))
         {
             if (Cast(3))
                 return;
